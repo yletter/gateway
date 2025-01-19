@@ -27,7 +27,8 @@ jobs:
       run: mvn clean package
 
     - name: Upload JAR artifact
-      uses: actions/upload-artifact@v2
+      if: always()
+      uses: actions/upload-artifact@v3
       with:
         name: my-java-app
         path: target/*.jar  # Assumes Maven output is in the target directory
