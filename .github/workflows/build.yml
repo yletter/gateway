@@ -35,6 +35,7 @@ jobs:
 
     - name: Create GitHub Release
       uses: actions/create-release@v1
+      id: create_release
       with:
         tag_name: v${{ github.run_number }}
         release_name: Release ${{ github.run_number }}
