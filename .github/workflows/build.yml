@@ -26,9 +26,30 @@ jobs:
     - name: Build with Maven
       run: mvn clean package
 
+    - name: Create Git Tag
+      run: |
+        git tag -a v${{ github.run_number }} -m "Release version ${{ github.run_number }}"
+        git push origin v${{ github.run_number }}
+
+    - name: Create GitHub Release
+      uses: actions/create-release@v1
+      with:
+        tag_name: v${{ github.run_number }}
+        release_name: Release ${{ github.run_number }}
+        body: |
+          Automated release created by GitHub Actions.
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.YGITHUB_TOKEN }}
+
     - name: Upload JAR artifact
       if: always()
       uses: actions/upload-artifact@v3
       with:
         name: gateway
         path: target/*.jar  # Assumes Maven output is in the target directory
+        upload_url: ${{ steps.create-release.outputs.upload_url }}
+        asset_path: target/gateway-0.0.1-SNAPSHOT.jar  # Path to your JAR file
+        asset_name: gateway.jar
+        asset_content_type: application/java-archive
