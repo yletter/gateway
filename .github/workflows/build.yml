@@ -28,6 +28,8 @@ jobs:
 
     - name: Create Git Tag
       run: |
+        git config --global user.name "yuvarajengineer"
+        git config --global user.email  yuvarajengineer@gmail.com
         git tag -a v${{ github.run_number }} -m "Release version ${{ github.run_number }}"
         git push origin v${{ github.run_number }}
 
