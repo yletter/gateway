@@ -51,7 +51,13 @@ jobs:
       with:
         name: gateway
         path: target/*.jar  # Assumes Maven output is in the target directory
+
+    - name: Upload JAR artifact
+      if: always()
+      uses: actions/upload-release-asset@v1
+      with:
         upload_url: ${{ steps.create-release.outputs.upload_url }}
         asset_path: target/gateway-0.0.1-SNAPSHOT.jar  # Path to your JAR file
         asset_name: gateway.jar
         asset_content_type: application/java-archive
+        
