@@ -17,5 +17,16 @@ spring:
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
-          
-          
+
+management:
+  server:
+    base-path: "/manage"
+  endpoints:
+    web:
+      exposure:
+        include: "health"
+  health:
+    livenessState:
+      enabled: true
+    readinessState:
+      enabled: true
