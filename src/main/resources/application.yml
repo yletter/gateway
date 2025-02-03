@@ -1,5 +1,8 @@
 server:
   port: 8080
+  servlet:
+    context-path: "/"
+
 spring:
   application:
     name: gateway
@@ -19,12 +22,13 @@ logging:
     org.springframework.cloud.gateway: DEBUG
 
 management:
-  server:
-    base-path: "/manage"
   endpoints:
     web:
+      base-path: "/manage"
       exposure:
         include: "health"
+    health:
+      show-details: always
   health:
     livenessState:
       enabled: true
